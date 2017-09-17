@@ -3,20 +3,31 @@ var ranks = ["two", "three", "four", "five", "six", "seven", "eight",
              "nine", "ten", "jack", "queen", "king", "ace"];
 
 // return true if the input is a suit, false otherwise.
-var isSuit = function () {
+var isSuit = function (input) {
+    return suits.indexOf(input) != -1;
 };
 
 // return true if the input is a rank, false otherwise.
-var isRank = function () {
+var isRank = function (input) {
+    return ranks.indexOf(input) != -1;
 };
 
 // return true if the input is a card object, false otherwise.
-var isCard = function () {
+var isCard = function (input) {
+    return typeof input === 'object' 
+            && Object.keys(input).length === 2
+            && typeof input.rank !== 'undefined'
+            && typeof input.suit !== 'undefined'
+            && isRank(input.rank)
+            && isSuit(input.suit);
 };
 
 // return true if the input is a deck of cards (an array of 52 cards
 // with no duplicates)
-var isDeck = function () {
+var isDeck = function (input) {
+    if (!(input instanceof Array)) return false;
+    let unique = [...new Set(input.map(i => i))];
+    return unique.length === 52;
 };
 
 // construct a deck of 52 cards that will pass the isDeck method
