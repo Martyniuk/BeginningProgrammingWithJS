@@ -32,14 +32,33 @@ var isDeck = function (input) {
 
 // construct a deck of 52 cards that will pass the isDeck method
 var createDeck = function () {
+    let deck = [];
+
+    for (let i = 0; i < suits.length; i++) {
+        for (let j = 0; j < ranks.length; j++) {
+            deck.push({ suit: suits[i], rank: ranks[j] });
+        }
+    }
+
+    return deck;
 };
 
 // fisher-yates shuffle
-var shuffle = function () {
+var shuffle = function (deck) {
+    for (let i = deck.length - 1; i >= 0; i--) {
+        let j = Math.floor(Math.random() * i);
+        [deck[i], deck[j]] = [deck[j], deck[i]]; 
+    }
 };
 
 // return true if the input is an array of 5 valid cards
-var isHand = function () {
+var isHand = function (hand) {
+    if (!(hand instanceof Array)) return false;
+
+    return hand.reduce((res, i) => {
+        res = isCard(i);
+        return res;
+    }, false);
 };
 
 // This function should return the first five cards from a shuffled
